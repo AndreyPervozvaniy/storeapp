@@ -3,6 +3,7 @@ import { Flex, Icon, Image, Text } from "@chakra-ui/react";
 import Logo from "../../assets/img/Logo.png";
 import { FaShoppingBag } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
+import { MdFavoriteBorder } from "react-icons/md";
 const Header = () => {
   return (
     <Flex
@@ -27,6 +28,7 @@ const Header = () => {
           {" "}
           1205 UAH
         </Text>
+        <Icon as={MdFavoriteBorder} w={8} h={8} m={2} cursor={"pointer"}></Icon>
         <Icon as={RxAvatar} w={8} h={8} m={2} cursor={"pointer"}></Icon>
       </Flex>
     </Flex>
