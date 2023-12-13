@@ -1,8 +1,9 @@
 import React from "react";
 import { Flex } from "@chakra-ui/react";
-import Header from "./components/Header/header";
-import MainContent from "./components/maincontent/maincontent";
-import Slider from "./components/slider/slider";
+import Header from "./components/Header/Header";
+import MainContent from "./components/Maincontent/MainContent";
+import Slider from "./components/Slider/Slider";
+
 function App() {
   return (
     <Flex

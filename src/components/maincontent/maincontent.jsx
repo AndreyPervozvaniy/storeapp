@@ -8,7 +8,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import React from "react";
-import Card from "../card/card";
+import Card from "../Card/Card";
 import { CiSearch } from "react-icons/ci";
 const MainContent = () => {
   return (
