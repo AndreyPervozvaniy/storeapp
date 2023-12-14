@@ -3,9 +3,44 @@ import React, { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { CardContent } from "../../utils/utils";
 import { MdFavoriteBorder } from "react-icons/md";
-import { IoIosArrowDropdownCircle } from "react-icons/io";
 
+import { BiCheck } from "react-icons/bi";
+import { useContext } from "react";
+import { BookContext } from "../../App";
 const Card = () => {
+  const [addInBag, setAddInBag] = useState([]);
+  const {
+    setSum,
+    favorite,
+    setFavorite,
+    addFavorite,
+    catalog,
+    setCatalog,
+    setSumFav,
+  } = useContext(BookContext);
+  const changeStatus = (index) => {
+    const newStatus = [...catalog];
+    newStatus[index].status = !newStatus[index].status;
+    setCatalog(newStatus);
+  };
+
+  useEffect(() => {
+    const filterCatalog = catalog.filter((book) => book.status);
+    setAddInBag(filterCatalog);
+  }, [catalog]);
+  useEffect(() => {
+    const filterCatalog = catalog.filter((book) => book.favorite);
+    setFavorite(filterCatalog);
+  }, [catalog, favorite]);
+  useEffect(() => {
+    const sumPay = addInBag.reduce((init, books) => init + +books.price, 0);
+    setSum(sumPay);
+  }, [addInBag]);
+  useEffect(() => {
+    const sumPay = favorite.reduce((init, books) => init + +books.price, 0);
+    setSumFav(sumPay);
+  }, [favorite]);
+
   return (
     <Container maxW={"8xl"} justifyContent={"center"}>
       <Flex flexWrap="wrap" gridGap={6} justifyContent={"center"}>
@@ -28,8 +63,14 @@ const Card = () => {
                 pos={"absolute"}
                 opacity={"40%"}
                 _hover={{ opacity: "100%" }}
+                onClick={() => addFavorite(index)}
               >
-                <Icon as={MdFavoriteBorder} w={6} h={6} />
+                {" "}
+                {card.favorite ? (
+                  <Icon as={BiCheck} w={6} h={6} />
+                ) : (
+                  <Icon as={MdFavoriteBorder} w={6} h={6} />
+                )}
               </Button>
               <Image
                 borderRadius={"10px"}
@@ -53,7 +94,12 @@ const Card = () => {
                   <Text>Price:</Text>
                   {card.price}
                 </Text>
-                <Button mt={1} border={"none"} background={"white"}>
+                <Button
+                  mt={1}
+                  border={"none"}
+                  onClick={() => changeStatus(index)}
+                  background={"white"}
+                >
                   {card.status ? "Remove" : "Add"}
                   <Icon as={CiCirclePlus} w={6} h={6} />
                 </Button>

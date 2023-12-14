@@ -9,10 +9,15 @@ import {
   DrawerCloseButton,
   Button,
   Flex,
+  Image,
   Text,
 } from "@chakra-ui/react";
-
+import { useContext } from "react";
+import { BookContext } from "../../App";
 const DrawerTemplate = ({ isOpenFavorite, onCloseFavorite }) => {
+  const { favorite, addFavorite, removeFavorite, suma, sumaFav } =
+    useContext(BookContext);
+  const bonus = Math.ceil(sumaFav / 10);
   return (
     <Flex>
       {" "}
@@ -26,13 +31,28 @@ const DrawerTemplate = ({ isOpenFavorite, onCloseFavorite }) => {
           <DrawerCloseButton />
           <DrawerHeader>Shop card</DrawerHeader>
 
-          <DrawerBody></DrawerBody>
+          <DrawerBody>
+            {favorite.length === 0 ? (
+              <Text>Нет избранных</Text>
+            ) : (
+              favorite.map((item, index) => (
+                <Flex key={index} flexDir={"column"}>
+                  <Image src={item.image} alt={item.name} />
+                  <Text>{item.name}</Text>
+                  <Text>Price: {item.price}</Text>
+                  <Button onClick={() => removeFavorite(index)}>Remove</Button>
+                </Flex>
+              ))
+            )}
+          </DrawerBody>
 
           <DrawerFooter>
             <Flex flexDir={"column"}>
               <Flex m={2} flexDir={"column"}>
-                <Text fontWeight={"bold"}> Total : 1340 UAH</Text>
-                <Text fontWeight={"bold"}>Bonus: 1 UAH = 1 Point</Text>
+                <Text fontWeight={"bold"}> Total : {sumaFav} UAH</Text>
+                <Text fontWeight={"bold"}>
+                  Bonus: {sumaFav} UAH = {bonus} Point
+                </Text>
               </Flex>
               <Flex justify={"flex-end"}>
                 {" "}
