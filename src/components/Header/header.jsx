@@ -37,8 +37,8 @@ const Header = () => {
         <Flex justifyContent={"center"} alignItems={"center"} px={6}>
           <Icon as={FaShoppingBag} w={7} h={7} m={2} cursor={"pointer"} />
           <Text as="span" fontWeight={"bold"}>
-            1205 UAH
-          </Text>
+            UAH
+          </Text>{" "}
           <Icon
             as={MdFavoriteBorder}
             w={8}

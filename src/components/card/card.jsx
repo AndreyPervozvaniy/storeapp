@@ -1,21 +1,11 @@
 import { Button, Flex, Icon, Image, Text, Container } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { CardContent } from "../../utils/utils";
 import { MdFavoriteBorder } from "react-icons/md";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
 
 const Card = () => {
-  const [addInBag, setAddInBag] = useState(
-    Array(CardContent.length).fill(false)
-  );
-
-  const isAdded = (index) => {
-    setAddInBag((prevAddInBag) => {
-      return prevAddInBag.map((value, i) => (i === index ? !value : value));
-    });
-  };
-
   return (
     <Container maxW={"8xl"} justifyContent={"center"}>
       <Flex flexWrap="wrap" gridGap={6} justifyContent={"center"}>
@@ -63,19 +53,9 @@ const Card = () => {
                   <Text>Price:</Text>
                   {card.price}
                 </Text>
-                <Button
-                  mt={1}
-                  border={"none"}
-                  onClick={() => isAdded(index)}
-                  background={"white"}
-                >
-                  <Icon
-                    as={
-                      addInBag[index] ? IoIosArrowDropdownCircle : CiCirclePlus
-                    }
-                    w={6}
-                    h={6}
-                  />
+                <Button mt={1} border={"none"} background={"white"}>
+                  {card.status ? "Remove" : "Add"}
+                  <Icon as={CiCirclePlus} w={6} h={6} />
                 </Button>
               </Flex>
             </Flex>

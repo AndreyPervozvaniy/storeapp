@@ -3,6 +3,7 @@ import { Flex } from "@chakra-ui/react";
 import Header from "./components/Header/Header";
 import MainContent from "./components/Maincontent/MainContent";
 import Slider from "./components/Slider/Slider";
+import Test from "./components/Test/Test";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Header />
       <Slider />
       <MainContent />
+      <Test />
     </Flex>
   );
 }
