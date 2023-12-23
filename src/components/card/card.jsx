@@ -13,6 +13,7 @@ import { CardContent } from "../../utils/utils";
 import { MdFavoriteBorder } from "react-icons/md";
 import { BiCheck } from "react-icons/bi";
 import { useContext } from "react";
+import { MdOutlineDownloadDone } from "react-icons/md";
 import { BookContext } from "../../App";
 const Card = () => {
   const [addInBag, setAddInBag] = useState([]);
@@ -63,6 +64,7 @@ const Card = () => {
             }}
             borderRadius={"20px"}
             border={"1px solid transparent"}
+            flexWrap={"wrap"}
           >
             {card.fishka || card.titul ? (
               <Flex
@@ -132,15 +134,28 @@ const Card = () => {
                   <Text>Price:</Text>
                   {card.price} UAH
                 </Text>
-                <Button
-                  mt={1}
-                  border={"none"}
-                  onClick={() => changeStatus(index)}
-                  background={"white"}
-                >
-                  {card.status ? "Remove" : "Add"}
-                  <Icon as={CiCirclePlus} w={6} h={6} />
-                </Button>
+                {card.status ? (
+                  <Button
+                    mt={1}
+                    border={"none"}
+                    background={"white"}
+                    _hover={{ background: "white" }}
+                    cursor={"default"}
+                  >
+                    Added <Icon as={MdOutlineDownloadDone} w={5} h={5}></Icon>
+                  </Button>
+                ) : (
+                  <Button
+                    mt={1}
+                    border={"none"}
+                    onClick={() => changeStatus(index)}
+                    background={"red"}
+                    _hover={{ background: "red" }}
+                  >
+                    Add
+                    <Icon as={CiCirclePlus} w={6} h={6}></Icon>
+                  </Button>
+                )}
               </Flex>
             </Flex>
           </Flex>
