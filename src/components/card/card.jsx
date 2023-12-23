@@ -1,9 +1,16 @@
-import { Button, Flex, Icon, Image, Text, Container } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Icon,
+  Image,
+  Text,
+  Container,
+  Box,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { CardContent } from "../../utils/utils";
 import { MdFavoriteBorder } from "react-icons/md";
-
 import { BiCheck } from "react-icons/bi";
 import { useContext } from "react";
 import { BookContext } from "../../App";
@@ -48,7 +55,7 @@ const Card = () => {
           <Flex
             m={4}
             key={index}
-            p={4}
+            p={6}
             transition={"0.2s ease-in-out"}
             _hover={{
               boxShadow: "0px 14px 30px rgba(0, 0, 0, 0.05)",
@@ -57,6 +64,37 @@ const Card = () => {
             borderRadius={"20px"}
             border={"1px solid transparent"}
           >
+            {card.fishka || card.titul ? (
+              <Flex
+                pos={"absolute"}
+                ml={180}
+                mt={2}
+                h={7}
+                textAlign={"center"}
+                flexDir={"column"}
+              >
+                <Text
+                  background={"green"}
+                  borderRadius={"20px 20px 0px 20px"}
+                  w={10}
+                  color={"white"}
+                  my={1}
+                >
+                  {card.fishka}
+                </Text>{" "}
+                <Text
+                  background={"orange"}
+                  borderRadius={"20px 20px 0px 20px"}
+                  w={10}
+                  color={"white"}
+                >
+                  {card.titul}
+                </Text>
+              </Flex>
+            ) : (
+              ""
+            )}
+
             <Flex flexDir={"column"}>
               <Button
                 w={"10px"}
@@ -92,7 +130,7 @@ const Card = () => {
                 <Text fontWeight={"bold"}>
                   {" "}
                   <Text>Price:</Text>
-                  {card.price}
+                  {card.price} UAH
                 </Text>
                 <Button
                   mt={1}

@@ -6,7 +6,7 @@ import { RxAvatar } from "react-icons/rx";
 import { MdFavoriteBorder } from "react-icons/md";
 import { useContext } from "react";
 import { useState } from "react";
-import DrawerTemplate from "../Drawer/Drawer";
+import DrawerFavorite from "../Drawer/DrawerFavorite";
 import { BookContext } from "../../App";
 const Header = () => {
   const [isOpenFavorite, setIsOpenFavorite] = useState(false);
@@ -37,7 +37,14 @@ const Header = () => {
           </Flex>
         </Flex>
         <Flex justifyContent={"center"} alignItems={"center"} px={6}>
-          <Icon as={FaShoppingBag} w={7} h={7} m={2} cursor={"pointer"} />
+          <Icon
+            as={FaShoppingBag}
+            w={7}
+            h={7}
+            _hover={{ color: "red" }}
+            m={2}
+            cursor={"pointer"}
+          />
           <Text as="span" fontWeight={"bold"}>
             {suma >= 1 && suma + "UAH"}
           </Text>{" "}
@@ -49,15 +56,23 @@ const Header = () => {
               onClick={onOpenFavorite}
               m={2}
               cursor={"pointer"}
+              _hover={{ color: "red" }}
             ></Icon>{" "}
             <Text color={"red"} pos={"absolute"} ml={10}>
               {favorite.length >= 1 && favorite.length}
             </Text>
           </Flex>
-          <Icon as={RxAvatar} w={8} h={8} m={2} cursor={"pointer"}></Icon>
+          <Icon
+            as={RxAvatar}
+            w={8}
+            h={8}
+            _hover={{ color: "red" }}
+            m={2}
+            cursor={"pointer"}
+          ></Icon>
         </Flex>
       </Flex>{" "}
-      <DrawerTemplate
+      <DrawerFavorite
         isOpenFavorite={isOpenFavorite}
         onCloseFavorite={onCloseFavorite}
       />

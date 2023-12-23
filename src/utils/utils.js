@@ -12,6 +12,8 @@ export const CardContent = [
     status: false,
     favorite: false,
     id: 1,
+    fishka: "new",
+    titul: "hit",
   },
   {
     image: book2,
@@ -20,6 +22,7 @@ export const CardContent = [
     status: false,
     favorite: false,
     id: 2,
+    titul: "hit",
   },
   {
     image: book3,
@@ -28,6 +31,7 @@ export const CardContent = [
     status: false,
     favorite: false,
     id: 3,
+    fishka: "new",
   },
   {
     image: book4,
@@ -36,6 +40,7 @@ export const CardContent = [
     status: false,
     favorite: false,
     id: 4,
+    fishka: "new",
   },
   {
     image: book5,
@@ -43,6 +48,7 @@ export const CardContent = [
     price: "1200 ",
     status: false,
     favorite: false,
+    titul: "hit",
   },
   {
     image: book6,
@@ -50,6 +56,32 @@ export const CardContent = [
     price: "1200 ",
     status: false,
     favorite: false,
+    fishka: "new",
+    titul: "hit",
+  },
+  {
+    image: book1,
+    name: "The Lord of the Rings",
+    price: "1200 ",
+    status: false,
+    favorite: false,
+    fishka: "new",
+  },
+  {
+    image: book1,
+    name: "The Lord of the Rings",
+    price: "1200 ",
+    status: false,
+    favorite: false,
+    fishka: "new",
+  },
+  {
+    image: book1,
+    name: "The Lord of the Rings",
+    price: "1200 ",
+    status: false,
+    favorite: false,
+    fishka: "new",
   },
   {
     image: book1,
@@ -71,26 +103,6 @@ export const CardContent = [
     price: "1200 ",
     status: false,
     favorite: false,
-  },
-  {
-    image: book1,
-    name: "The Lord of the Rings",
-    price: "1200 ",
-    status: false,
-    favorite: false,
-  },
-  {
-    image: book1,
-    name: "The Lord of the Rings",
-    price: "1200 ",
-    status: false,
-    favorite: false,
-  },
-  {
-    image: book1,
-    name: "The Lord of the Rings",
-    price: "1200 ",
-    status: false,
-    favorite: false,
+    fishka: "new",
   },
 ];
