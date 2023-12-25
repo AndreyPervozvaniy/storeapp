@@ -17,9 +17,19 @@ import { useContext } from "react";
 import { BookContext } from "../../App";
 import { TiShoppingBag } from "react-icons/ti";
 import { MdOutlineCancel } from "react-icons/md";
+import { MdOutlineDownloadDone } from "react-icons/md";
 const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
-  const { favorite, addFavorite, removeFavorite, suma, sumaFav } =
-    useContext(BookContext);
+  const {
+    favorite,
+    addFavorite,
+    removeFavorite,
+    transBook,
+    addBag,
+    suma,
+    onOpenBag,
+    pressedTransfer,
+    sumaFav,
+  } = useContext(BookContext);
 
   return (
     <Flex>
@@ -86,22 +96,43 @@ const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
                           cursor={"pointer"}
                         />
                       </Button>{" "}
-                      <Button
-                        w={"20px"}
-                        borderRadius={"50%"}
-                        background={"#fc0303"}
-                        my={2}
-                        _hover={{ background: "#c40202" }}
-                        boxShadow="1px 5px 20px grey"
-                      >
-                        <Icon
-                          as={TiShoppingBag}
-                          w={5}
-                          h={5}
-                          color={"white"}
-                          cursor={"pointer"}
-                        />
-                      </Button>
+                      {pressedTransfer ? (
+                        <Button
+                          w={"20px"}
+                          borderRadius={"50%"}
+                          background={"grey"}
+                          my={2}
+                          _hover={{ background: "#c40202" }}
+                          boxShadow="1px 5px 20px grey"
+                        >
+                          {" "}
+                          <Icon
+                            as={MdOutlineDownloadDone}
+                            w={5}
+                            h={5}
+                            color={"white"}
+                            cursor={"default"}
+                          />
+                        </Button>
+                      ) : (
+                        <Button
+                          w={"20px"}
+                          borderRadius={"50%"}
+                          background={"#fc0303"}
+                          my={2}
+                          _hover={{ background: "#c40202" }}
+                          boxShadow="1px 5px 20px grey"
+                          onClick={() => transBook(index)}
+                        >
+                          <Icon
+                            as={TiShoppingBag}
+                            w={5}
+                            h={5}
+                            color={"white"}
+                            cursor={"pointer"}
+                          />
+                        </Button>
+                      )}
                     </Flex>
                   </Flex>
                 </Flex>

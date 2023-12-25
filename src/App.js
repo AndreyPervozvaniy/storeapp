@@ -11,17 +11,50 @@ function App() {
   const [suma, setSum] = useState(0);
   const [favorite, setFavorite] = useState([]);
   const [sumaFav, setSumFav] = useState(0);
-
+  const [addInBag, setAddInBag] = useState([]);
   const [catalog, setCatalog] = useState(CardContent);
+  const [bookCount, setBookCount] = useState(0);
+  const [pressedTransfer, setPressedTransfer] = useState(false);
+  const transBook = (index) => {
+    const trans = [...favorite];
+    trans[index].status = !trans[index].status;
+    setAddInBag(trans);
+    setBookCount(bookCount + 1);
+    setPressedTransfer(true);
+  };
+  const bookCountPlus = (index) => {
+    const count = [...addInBag];
+    count[index].count = count[index].count + 1;
+    setAddInBag(count);
+    setBookCount(bookCount + 1);
+  };
+  const bookCountMinus = (index) => {
+    const count = [...addInBag];
+    count[index].count = count[index].count - 1;
+    setAddInBag(count);
+    setBookCount(bookCount - 1);
+  };
   const addFavorite = (index) => {
     const favoriteBook = [...catalog];
     favoriteBook[index].favorite = !favoriteBook[index].favorite;
     setCatalog(favoriteBook);
   };
+  const addBag = (index) => {
+    const newStatus = [...catalog];
+    newStatus[index].status = !newStatus[index].status;
+    setCatalog(newStatus);
+    setBookCount(bookCount + 1);
+  };
   const removeFavorite = (index) => {
     const remove = [...favorite];
     remove[index].favorite = !remove[index].favorite;
     setFavorite(remove);
+  };
+  const removeBag = (index) => {
+    const remove = [...addInBag];
+    remove[index].status = !remove[index].status;
+    setAddInBag(remove);
+    setBookCount(bookCount - remove[index].count, (remove[index].count = 1));
   };
   return (
     <BookContext.Provider
@@ -35,8 +68,18 @@ function App() {
         setCatalog,
         addFavorite,
         setSumFav,
+        bookCountPlus,
         sumaFav,
         removeFavorite,
+        addInBag,
+        bookCountMinus,
+        setAddInBag,
+        addBag,
+        removeBag,
+        transBook,
+        bookCount,
+        setBookCount,
+        pressedTransfer,
       }}
     >
       {" "}

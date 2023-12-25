@@ -16,7 +16,6 @@ import { useContext } from "react";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import { BookContext } from "../../App";
 const Card = () => {
-  const [addInBag, setAddInBag] = useState([]);
   const {
     setSum,
     favorite,
@@ -25,23 +24,24 @@ const Card = () => {
     catalog,
     setCatalog,
     setSumFav,
+    addInBag,
+    setAddInBag,
+    addBag,
   } = useContext(BookContext);
-  const changeStatus = (index) => {
-    const newStatus = [...catalog];
-    newStatus[index].status = !newStatus[index].status;
-    setCatalog(newStatus);
-  };
 
   useEffect(() => {
     const filterCatalog = catalog.filter((book) => book.status);
     setAddInBag(filterCatalog);
-  }, [catalog]);
+  }, [catalog, addInBag]);
   useEffect(() => {
     const filterCatalog = catalog.filter((book) => book.favorite);
     setFavorite(filterCatalog);
   }, [catalog, favorite]);
   useEffect(() => {
-    const sumPay = addInBag.reduce((init, books) => init + +books.price, 0);
+    const sumPay = addInBag.reduce(
+      (init, books) => init + +books.price * books.count,
+      0
+    );
     setSum(sumPay);
   }, [addInBag]);
   useEffect(() => {
@@ -148,12 +148,13 @@ const Card = () => {
                   <Button
                     mt={1}
                     border={"none"}
-                    onClick={() => changeStatus(index)}
+                    onClick={() => addBag(index)}
                     background={"red"}
                     _hover={{ background: "red" }}
+                    borderRadius={"30px"}
                   >
-                    Add
-                    <Icon as={CiCirclePlus} w={6} h={6}></Icon>
+                    <Text color={"white"}>Add</Text>
+                    <Icon as={CiCirclePlus} color={"white"} w={6} h={6}></Icon>
                   </Button>
                 )}
               </Flex>

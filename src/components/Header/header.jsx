@@ -8,15 +8,25 @@ import { useContext } from "react";
 import { useState } from "react";
 import DrawerFavorite from "../Drawer/DrawerFavorite";
 import { BookContext } from "../../App";
+import DrawerBag from "../Drawer/DrawerBag";
 const Header = () => {
   const [isOpenFavorite, setIsOpenFavorite] = useState(false);
-  const { suma, setSum, favorite } = useContext(BookContext);
+  const [isOpenBag, setIsOpenBag] = useState(false);
+  const { suma, setSum, favorite, addInBag, bookCount } =
+    useContext(BookContext);
   const onCloseFavorite = () => {
     setIsOpenFavorite(false);
   };
 
   const onOpenFavorite = () => {
     setIsOpenFavorite(true);
+  };
+  const onCloseBag = () => {
+    setIsOpenBag(false);
+  };
+
+  const onOpenBag = () => {
+    setIsOpenBag(true);
   };
   return (
     <Flex>
@@ -37,18 +47,25 @@ const Header = () => {
           </Flex>
         </Flex>
         <Flex justifyContent={"center"} alignItems={"center"} px={6}>
-          <Icon
-            as={FaShoppingBag}
-            w={7}
-            h={7}
-            _hover={{ color: "red" }}
-            m={2}
-            cursor={"pointer"}
-          />
+          <Flex p={2}>
+            {" "}
+            <Icon
+              as={FaShoppingBag}
+              w={7}
+              h={7}
+              _hover={{ color: "red" }}
+              m={2}
+              cursor={"pointer"}
+              onClick={onOpenBag}
+            />{" "}
+            <Text color={"red"} ml={9} pos="absolute">
+              {bookCount >= 1 && bookCount}
+            </Text>
+          </Flex>
           <Text as="span" fontWeight={"bold"}>
             {suma >= 1 && suma + "UAH"}
           </Text>{" "}
-          <Flex>
+          <Flex p={2}>
             <Icon
               as={MdFavoriteBorder}
               w={8}
@@ -76,6 +93,7 @@ const Header = () => {
         isOpenFavorite={isOpenFavorite}
         onCloseFavorite={onCloseFavorite}
       />
+      <DrawerBag isOpenBag={isOpenBag} onCloseBag={onCloseBag} />
     </Flex>
   );
 };
