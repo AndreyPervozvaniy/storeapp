@@ -6,6 +6,7 @@ import book5 from "../assets/img/book 5.jpg";
 import book6 from "../assets/img/book6.jpg";
 export const CardContent = [
   {
+    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",
@@ -17,6 +18,7 @@ export const CardContent = [
     titul: "hit",
   },
   {
+    transferButton: false,
     image: book2,
     name: "Shantaram",
     price: "1300 ",
@@ -27,6 +29,7 @@ export const CardContent = [
     titul: "hit",
   },
   {
+    transferButton: false,
     image: book3,
     name: "451 fahrenheit",
     price: "999 ",
@@ -37,6 +40,7 @@ export const CardContent = [
     fishka: "new",
   },
   {
+    transferButton: false,
     image: book4,
     name: "The Art of War",
     price: "750 ",
@@ -47,6 +51,7 @@ export const CardContent = [
     fishka: "new",
   },
   {
+    transferButton: false,
     image: book5,
     name: "Mystery Island",
     price: "1200 ",
@@ -56,6 +61,7 @@ export const CardContent = [
     titul: "hit",
   },
   {
+    transferButton: false,
     image: book6,
     name: "Three Comrades",
     price: "1200 ",
@@ -66,6 +72,7 @@ export const CardContent = [
     titul: "hit",
   },
   {
+    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",
@@ -75,6 +82,7 @@ export const CardContent = [
     fishka: "new",
   },
   {
+    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",
@@ -84,6 +92,7 @@ export const CardContent = [
     fishka: "new",
   },
   {
+    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",
@@ -93,6 +102,7 @@ export const CardContent = [
     fishka: "new",
   },
   {
+    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",
@@ -101,6 +111,7 @@ export const CardContent = [
     favorite: false,
   },
   {
+    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",
@@ -109,6 +120,7 @@ export const CardContent = [
     favorite: false,
   },
   {
+    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",

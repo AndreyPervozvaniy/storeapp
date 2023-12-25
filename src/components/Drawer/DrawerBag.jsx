@@ -129,7 +129,7 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                           <Button
                             borderRadius={"20px"}
                             onClick={() => {
-                              if (item.count > 1) {
+                              if (item.count > 0) {
                                 bookCountMinus(index);
                               }
                             }}

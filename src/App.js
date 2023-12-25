@@ -14,13 +14,22 @@ function App() {
   const [addInBag, setAddInBag] = useState([]);
   const [catalog, setCatalog] = useState(CardContent);
   const [bookCount, setBookCount] = useState(0);
-  const [pressedTransfer, setPressedTransfer] = useState(false);
+  const [pressedTransfer, setPressedTransfer] = useState(CardContent);
+  const [isOpenBag, setIsOpenBag] = useState(false);
+  const onCloseBag = () => {
+    setIsOpenBag(false);
+  };
+
+  const onOpenBag = () => {
+    setIsOpenBag(true);
+  };
   const transBook = (index) => {
     const trans = [...favorite];
     trans[index].status = !trans[index].status;
     setAddInBag(trans);
-    setBookCount(bookCount + 1);
+    setBookCount(bookCount + trans[index].count);
     setPressedTransfer(true);
+    setIsOpenBag(true);
   };
   const bookCountPlus = (index) => {
     const count = [...addInBag];
@@ -43,7 +52,7 @@ function App() {
     const newStatus = [...catalog];
     newStatus[index].status = !newStatus[index].status;
     setCatalog(newStatus);
-    setBookCount(bookCount + 1);
+    setBookCount(bookCount + newStatus[index].count);
   };
   const removeFavorite = (index) => {
     const remove = [...favorite];
@@ -56,6 +65,18 @@ function App() {
     setAddInBag(remove);
     setBookCount(bookCount - remove[index].count, (remove[index].count = 1));
   };
+  useEffect(() => {
+    const countChecker = addInBag.map((book, index) => {
+      if (book.count < 1) {
+        removeBag(index);
+        setBookCount(bookCount - book.count);
+      }
+    });
+  }, [addInBag]);
+  useEffect(() => {
+    const filterCatalog = catalog.filter((book) => book.status);
+    setAddInBag(filterCatalog);
+  }, [catalog, addInBag]);
   return (
     <BookContext.Provider
       value={{
@@ -73,6 +94,7 @@ function App() {
         removeFavorite,
         addInBag,
         bookCountMinus,
+        setIsOpenBag,
         setAddInBag,
         addBag,
         removeBag,
@@ -80,6 +102,9 @@ function App() {
         bookCount,
         setBookCount,
         pressedTransfer,
+        onCloseBag,
+        isOpenBag,
+        onOpenBag,
       }}
     >
       {" "}

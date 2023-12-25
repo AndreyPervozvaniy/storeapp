@@ -18,6 +18,7 @@ import { BookContext } from "../../App";
 import { TiShoppingBag } from "react-icons/ti";
 import { MdOutlineCancel } from "react-icons/md";
 import { MdOutlineDownloadDone } from "react-icons/md";
+import DrawerBag from "./DrawerBag";
 const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
   const {
     favorite,
@@ -29,6 +30,9 @@ const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
     onOpenBag,
     pressedTransfer,
     sumaFav,
+    onCloseBag,
+    isOpenBag,
+    setIsOpenBag,
   } = useContext(BookContext);
 
   return (
@@ -96,7 +100,7 @@ const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
                           cursor={"pointer"}
                         />
                       </Button>{" "}
-                      {pressedTransfer ? (
+                      {item.status ? (
                         <Button
                           w={"20px"}
                           borderRadius={"50%"}
@@ -147,7 +151,12 @@ const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
                 w={"full"}
                 justifyContent={"space-between"}
               >
-                <Button colorScheme="red" my={2} borderRadius={"50px"}>
+                <Button
+                  colorScheme="red"
+                  my={2}
+                  borderRadius={"50px"}
+                  onClick={() => setIsOpenBag(true)}
+                >
                   <Text>TO BAG</Text>
                 </Button>{" "}
                 <Button
@@ -163,7 +172,8 @@ const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
             </Flex>
           </DrawerFooter>
         </DrawerContent>
-      </Drawer>
+      </Drawer>{" "}
+      <DrawerBag isOpenBag={isOpenBag} onCloseBag={onCloseBag} />
     </Flex>
   );
 };
