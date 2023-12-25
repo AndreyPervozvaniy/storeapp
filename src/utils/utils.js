@@ -4,7 +4,21 @@ import book3 from "../assets/img/book3.jpg";
 import book4 from "../assets/img/book4.jpg";
 import book5 from "../assets/img/book 5.jpg";
 import book6 from "../assets/img/book6.jpg";
+
+import book8 from "../assets/img/book8.jpg";
 export const CardContent = [
+  {
+    transferButton: false,
+    image: book8,
+    name: "The Witcher",
+    price: "377 ",
+    count: 1,
+    status: false,
+    favorite: false,
+    id: 1,
+    fishka: "new",
+    titul: "hit",
+  },
   {
     transferButton: false,
     image: book1,

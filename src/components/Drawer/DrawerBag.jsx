@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   Drawer,
@@ -19,17 +19,22 @@ import { BookContext } from "../../App";
 import { TiShoppingBag } from "react-icons/ti";
 import { MdOutlineCancel } from "react-icons/md";
 import emptybag from "../../assets/img/emptybag.jpg";
+import novaposhta from "../../assets/img/nova.jpg";
+import ukrposhta from "../../assets/img/ukrposhta.png";
 const DrawerBag = ({ isOpenBag, onCloseBag }) => {
   const {
     addInBag,
     removeFavorite,
     removeBag,
     bookCount,
+    suma,
     setBookCount,
     bookCountMinus,
 
     bookCountPlus,
   } = useContext(BookContext);
+  const [rangePriceUkr, setRangePriceUkr] = useState(800);
+  const [rangePriceNova, setRangePriceNova] = useState(1600);
   return (
     <Flex>
       <Drawer
@@ -88,7 +93,7 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                     <Flex flexDir={"column"} textAlign={"center"}>
                       {" "}
                       <Text>{item.name}</Text>
-                      <Text>Price: {item.price} UAH</Text>
+                      <Text fontWeight={"bold"}>Price: {item.price} UAH</Text>
                     </Flex>
                     <Flex w={"60px"}>
                       <Flex
@@ -115,17 +120,7 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                           justifyContent={"center"}
                           alignItems={"center"}
                         >
-                          <Button
-                            borderRadius={"20px"}
-                            onClick={() => {
-                              if (item.count < 10) {
-                                bookCountPlus(index);
-                              }
-                            }}
-                          >
-                            +
-                          </Button>
-                          <Text>{item.count}</Text>
+                          {" "}
                           <Button
                             borderRadius={"20px"}
                             onClick={() => {
@@ -136,6 +131,17 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                           >
                             -
                           </Button>
+                          <Text>{item.count}</Text>{" "}
+                          <Button
+                            borderRadius={"20px"}
+                            onClick={() => {
+                              if (item.count < 10) {
+                                bookCountPlus(index);
+                              }
+                            }}
+                          >
+                            +
+                          </Button>
                         </Flex>
                       </Flex>
                     </Flex>
@@ -144,9 +150,92 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
               ))
             )}
           </DrawerBody>
+          {addInBag.length < 1 ? (
+            <></>
+          ) : (
+            <DrawerFooter background={"#ccc"}>
+              <Flex flexDir={"column"} w={"full"}>
+                <Text fontWeight={"bold"} fontSize={"lg"}>
+                  Add more books for free deliver
+                </Text>
+                <Flex justifyContent={"space-between"} w={"full"}>
+                  <Flex alignItems={"center"}>
+                    <Image
+                      mr={2}
+                      borderRadius={"20px"}
+                      h={"20px"}
+                      w={"20px"}
+                      src={ukrposhta}
+                    />
+                    <Text>On post:</Text>
+                  </Flex>
+                  {suma > 800 ? (
+                    <Text fontWeight={"bold"} fontSize={"lg"}>
+                      Free
+                    </Text>
+                  ) : (
+                    <Text fontWeight={"bold"} fontSize={"lg"}>
+                      {rangePriceUkr - suma} UAH
+                    </Text>
+                  )}
+                </Flex>{" "}
+                <Flex justifyContent={"space-between"} w={"full"}>
+                  <Flex alignItems={"center"}>
+                    <Image
+                      mr={2}
+                      borderRadius={"20px"}
+                      h={"20px"}
+                      w={"20px"}
+                      src={novaposhta}
+                    />
+                    <Text>On post:</Text>
+                  </Flex>
+                  {suma > 1600 ? (
+                    <Text fontWeight={"bold"} fontSize={"lg"}>
+                      Free
+                    </Text>
+                  ) : (
+                    <Text fontWeight={"bold"} fontSize={"lg"}>
+                      {rangePriceNova - suma} UAH
+                    </Text>
+                  )}
+                </Flex>{" "}
+                <Flex justifyContent={"space-between"} w={"full"}>
+                  <Flex alignItems={"center"}>
+                    <Image
+                      mr={2}
+                      borderRadius={"20px"}
+                      h={"20px"}
+                      w={"20px"}
+                      src={novaposhta}
+                    />
+                    <Text>On post cell:</Text>
+                  </Flex>
+                  {suma > 1600 ? (
+                    <Text fontWeight={"bold"} fontSize={"lg"}>
+                      Free
+                    </Text>
+                  ) : (
+                    <Text fontWeight={"bold"} fontSize={"lg"}>
+                      {rangePriceNova - suma} UAH
+                    </Text>
+                  )}
+                </Flex>
+              </Flex>
+            </DrawerFooter>
+          )}
 
           <DrawerFooter>
             <Flex flexDir={"column"} w={"full"}>
+              {" "}
+              <Flex justifyContent={"space-between"} alignItems={"center"}>
+                {" "}
+                <Text color={"grey"}>To pay without deliver : </Text>
+                <Text fontWeight={"bold"} fontSize={"2xl"}>
+                  {" "}
+                  {suma} UAH
+                </Text>
+              </Flex>
               <Flex
                 flexDir={"column"}
                 w={"full"}
