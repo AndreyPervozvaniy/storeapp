@@ -18,6 +18,7 @@ import { BookContext } from "../../App";
 import { TiShoppingBag } from "react-icons/ti";
 import { MdOutlineCancel } from "react-icons/md";
 import { MdOutlineDownloadDone } from "react-icons/md";
+import nofavorite from "../../assets/img/nofavorite.jpg";
 import DrawerBag from "./DrawerBag";
 const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
   const {
@@ -55,14 +56,14 @@ const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
 
           <DrawerBody>
             {favorite.length === 0 ? (
-              <Text>Нет избранных</Text>
+              <Image src={nofavorite} w={"500px"} />
             ) : (
               favorite.map((item, index) => (
                 <Flex
                   key={index}
                   flexDir={"column"}
                   borderBottom={
-                    index < favorite.length - 1 ? "1px solid grey" : ""
+                    index < favorite.length - 1 ? "1px solid #ccc" : ""
                   }
                   _hover={{ background: "#f5eded" }}
                 >

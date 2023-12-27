@@ -29,7 +29,6 @@ function App() {
     setAddInBag(trans);
     setBookCount(bookCount + trans[index].count);
     setPressedTransfer(true);
-    setIsOpenBag(true);
   };
   const bookCountPlus = (index) => {
     const count = [...addInBag];

@@ -95,8 +95,7 @@ const Card = () => {
               </Flex>
             ) : (
               ""
-            )}
-
+            )}{" "}
             <Flex flexDir={"column"}>
               <Button
                 w={"10px"}
