@@ -6,11 +6,28 @@ import {
   InputRightElement,
   Icon,
   Stack,
+  Image,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import Card from "../Card/Card";
 import { CiSearch } from "react-icons/ci";
+import { CardContent } from "../../utils/utils";
 const MainContent = () => {
+  const [filterBook, setFilterBook] = useState([]);
+  const handleFilter = (event) => {
+    const searcWord = event.target.value;
+    const newFilter = CardContent.filter((value) => {
+      return value.name
+        .toLowerCase()
+        .trim()
+        .includes(searcWord.toLowerCase().trim());
+    });
+    if (searcWord === "") {
+      setFilterBook([]);
+    } else {
+      setFilterBook(newFilter);
+    }
+  };
   return (
     <Flex flexDir={"column"}>
       <Flex justifyContent={"space-between"} alignContent={"center"}>
@@ -22,8 +39,44 @@ const MainContent = () => {
             <InputRightElement pointerEvents="none">
               <Icon as={CiSearch} />
             </InputRightElement>
-            <Input w={"400px"} type="text" placeholder="Search..." />
-          </InputGroup>
+            <Input
+              w={"400px"}
+              type="text"
+              placeholder="Search..."
+              onChange={handleFilter}
+            />{" "}
+          </InputGroup>{" "}
+          {filterBook.length != 0 && (
+            <Flex
+              background={"white"}
+              overflow={"hidden"}
+              overflowY={"auto"}
+              w={"400px"}
+              h={"150px"}
+              flexWrap={"wrap"}
+              pos={"absolute"}
+              mt={"200px"}
+              zIndex={2}
+            >
+              {filterBook.map((book, id) => {
+                return (
+                  <Flex key={id} p={2}>
+                    <Flex
+                      cursor={"pointer"}
+                      justifyContent={"center"}
+                      alignItems={"center"}
+                      textAlign={"center"}
+                      borderBottom={"1px solid #ccc"}
+                      p={1}
+                    >
+                      <Image h={"50px"} w={"40px"} src={book.image} />
+                      <Text w={"300px"}>{book.name}</Text>
+                    </Flex>
+                  </Flex>
+                );
+              })}
+            </Flex>
+          )}
         </Stack>
       </Flex>
 

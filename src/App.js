@@ -3,7 +3,7 @@ import { Flex } from "@chakra-ui/react";
 import Header from "./components/Header/Header";
 import MainContent from "./components/Maincontent/MainContent";
 import Slider from "./components/Slider/Slider";
-
+import { sliderData } from "./utils/slidercontent";
 import { CardContent } from "./utils/utils";
 export const BookContext = createContext();
 export const MyContext = createContext();
@@ -115,7 +115,7 @@ function App() {
         alignContent={"center"}
       >
         <Header />
-        <Slider />
+        <Slider slides={sliderData} />
         <MainContent />
       </Flex>
     </BookContext.Provider>
