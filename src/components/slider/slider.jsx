@@ -3,8 +3,9 @@ import React from "react";
 import { Image } from "@chakra-ui/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { sliderData } from "../../utils/slidercontent";
 
-const Slider = ({ slides }) => {
+const Slider = () => {
   return (
     <Flex w="100%" mt={"68px"} color="white">
       <Carousel
@@ -13,10 +14,18 @@ const Slider = ({ slides }) => {
         autoPlay
         interval={5000}
         emulateTouch
+        showThumbs={false}
         showStatus={false}
       >
-        {slides.map((slide) => {
-          return <Image src={slide.image} height="auto" width="100%" />;
+        {sliderData.map((slide) => {
+          return (
+            <Image
+              key={slide.id}
+              src={slide.image}
+              height="auto"
+              width="100%"
+            />
+          );
         })}
       </Carousel>
     </Flex>

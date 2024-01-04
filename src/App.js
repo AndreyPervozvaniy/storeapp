@@ -1,28 +1,21 @@
 import React, { createContext, useState, useEffect } from "react";
 import { Flex } from "@chakra-ui/react";
 import Header from "./components/Header/Header";
-import MainContent from "./components/Maincontent/MainContent";
-import Slider from "./components/Slider/Slider";
+import MainContent from "./components/maincontent/MainContent";
+import Slider from "./components/slider/Slider";
 import { sliderData } from "./utils/slidercontent";
 import { CardContent } from "./utils/utils";
 export const BookContext = createContext();
-export const MyContext = createContext();
+
 function App() {
-  const [suma, setSum] = useState(0);
+  const [sum, setSum] = useState(0);
   const [favorite, setFavorite] = useState([]);
   const [sumaFav, setSumFav] = useState(0);
   const [addInBag, setAddInBag] = useState([]);
   const [catalog, setCatalog] = useState(CardContent);
   const [bookCount, setBookCount] = useState(0);
   const [pressedTransfer, setPressedTransfer] = useState(CardContent);
-  const [isOpenBag, setIsOpenBag] = useState(false);
-  const onCloseBag = () => {
-    setIsOpenBag(false);
-  };
 
-  const onOpenBag = () => {
-    setIsOpenBag(true);
-  };
   const transBook = (index) => {
     const trans = [...favorite];
     trans[index].status = !trans[index].status;
@@ -64,6 +57,7 @@ function App() {
     setAddInBag(remove);
     setBookCount(bookCount - remove[index].count, (remove[index].count = 1));
   };
+
   useEffect(() => {
     const countChecker = addInBag.map((book, index) => {
       if (book.count < 1) {
@@ -72,14 +66,15 @@ function App() {
       }
     });
   }, [addInBag]);
-  useEffect(() => {
-    const filterCatalog = catalog.filter((book) => book.status);
-    setAddInBag(filterCatalog);
-  }, [catalog, addInBag]);
+
+  // useEffect(() => {
+  //   const filterCatalog = catalog.filter((book) => book.status);
+  //   setAddInBag(filterCatalog);
+  // }, [catalog, addInBag]);
   return (
     <BookContext.Provider
       value={{
-        suma,
+        sum,
         setSum,
         favorite,
         setFavorite,
@@ -93,7 +88,6 @@ function App() {
         removeFavorite,
         addInBag,
         bookCountMinus,
-        setIsOpenBag,
         setAddInBag,
         addBag,
         removeBag,
@@ -101,12 +95,8 @@ function App() {
         bookCount,
         setBookCount,
         pressedTransfer,
-        onCloseBag,
-        isOpenBag,
-        onOpenBag,
       }}
     >
-      {" "}
       <Flex
         w={"100%"}
         flexDir={"column"}
@@ -115,7 +105,7 @@ function App() {
         alignContent={"center"}
       >
         <Header />
-        <Slider slides={sliderData} />
+        <Slider />
         <MainContent />
       </Flex>
     </BookContext.Provider>

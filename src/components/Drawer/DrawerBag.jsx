@@ -31,7 +31,7 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
-const DrawerBag = ({ isOpenBag, onCloseBag }) => {
+const DrawerBag = ({ isOpen, onClose }) => {
   const {
     addInBag,
     removeFavorite,
@@ -40,7 +40,6 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
     suma,
     setBookCount,
     bookCountMinus,
-
     bookCountPlus,
   } = useContext(BookContext);
   const [rangePriceUkr, setRangePriceUkr] = useState(400);
@@ -53,12 +52,7 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
 
   return (
     <Flex>
-      <Drawer
-        isOpen={isOpenBag}
-        placement="right"
-        size={"md"}
-        onClose={onCloseBag}
-      >
+      <Drawer isOpen={isOpen} placement="right" size={"md"} onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent borderLeftRadius="30px">
           <DrawerCloseButton />
@@ -76,7 +70,7 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                 <Button
                   variant="outline"
                   border={"none"}
-                  onClick={onCloseBag}
+                  onClick={onClose}
                   borderRadius={"50px"}
                   _hover={{ background: "#f7d0d0" }}
                 >

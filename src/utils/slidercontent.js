@@ -6,17 +6,22 @@ import img5 from "../assets/img/sliderImage/wvuo31ya2voxtz03cei3j8lnmrxwyk09.web
 export const sliderData = [
   {
     image: img1,
+    id: 1,
   },
   {
     image: img2,
+    id: 2,
   },
   {
     image: img3,
+    id: 3,
   },
   {
     image: img4,
+    id: 4,
   },
   {
     image: img5,
+    id: 5,
   },
 ];

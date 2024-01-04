@@ -29,33 +29,44 @@ const Card = () => {
     addBag,
   } = useContext(BookContext);
 
-  useEffect(() => {
-    const filterCatalog = catalog.filter((book) => book.status);
-    setAddInBag(filterCatalog);
-  }, [catalog, addInBag]);
-  useEffect(() => {
-    const filterCatalog = catalog.filter((book) => book.favorite);
-    setFavorite(filterCatalog);
-  }, [catalog, favorite]);
-  useEffect(() => {
-    const sumPay = addInBag.reduce(
-      (init, books) => init + +books.price * books.count,
-      0
+  // useEffect(() => {
+  //   const filterCatalog = catalog.filter((book) => book.status);
+  //   setAddInBag(filterCatalog);
+  // }, [catalog, addInBag]);
+
+  // useEffect(() => {
+  //   const filterCatalog = catalog.filter((book) => book.favorite);
+  //   setFavorite(filterCatalog);
+  // }, [catalog, favorite]);
+
+  // useEffect(() => {
+  //   const sumPay = addInBag.reduce(
+  //     (init, books) => init + +books.price * books.count,
+  //     0
+  //   );
+  //   setSum(sumPay);
+  // }, [addInBag]);
+
+  // useEffect(() => {
+  //   const sumPay = favorite.reduce((init, books) => init + +books.price, 0);
+  //   setSumFav(sumPay);
+  // }, [favorite]);
+
+  const toggleFavorite = (id, isFavorite) => {
+    setCatalog(() =>
+      catalog.map((book) =>
+        book.id === id ? { ...book, isFavorite: !isFavorite } : book
+      )
     );
-    setSum(sumPay);
-  }, [addInBag]);
-  useEffect(() => {
-    const sumPay = favorite.reduce((init, books) => init + +books.price, 0);
-    setSumFav(sumPay);
-  }, [favorite]);
+  };
 
   return (
     <Container maxW={"8xl"} justifyContent={"center"}>
       <Flex flexWrap="wrap" gridGap={6} justifyContent={"center"}>
-        {CardContent.map((card, index) => (
+        {catalog.map((card, index) => (
           <Flex
             m={4}
-            key={index}
+            key={card.id}
             p={6}
             transition={"0.2s ease-in-out"}
             _hover={{
@@ -95,21 +106,20 @@ const Card = () => {
               </Flex>
             ) : (
               ""
-            )}{" "}
+            )}
             <Flex flexDir={"column"}>
               <Button
                 w={"10px"}
                 pos={"absolute"}
                 opacity={"40%"}
                 _hover={{ opacity: "100%" }}
-                onClick={() => addFavorite(index)}
+                onClick={() => toggleFavorite(card.id, card.isFavorite)}
               >
-                {" "}
-                {card.favorite ? (
-                  <Icon as={BiCheck} w={6} h={6} />
-                ) : (
-                  <Icon as={MdFavoriteBorder} w={6} h={6} />
-                )}
+                <Icon
+                  as={card.isFavorite ? BiCheck : MdFavoriteBorder}
+                  w={6}
+                  h={6}
+                />
               </Button>
               <Image
                 borderRadius={"10px"}

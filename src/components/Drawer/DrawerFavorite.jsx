@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Drawer,
   DrawerBody,
@@ -20,30 +20,24 @@ import { MdOutlineCancel } from "react-icons/md";
 import { MdOutlineDownloadDone } from "react-icons/md";
 import nofavorite from "../../assets/img/nofavorite.jpg";
 import DrawerBag from "./DrawerBag";
-const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
-  const {
-    favorite,
-    addFavorite,
-    removeFavorite,
-    transBook,
-    addBag,
-    suma,
-    onOpenBag,
-    pressedTransfer,
-    sumaFav,
-    onCloseBag,
-    isOpenBag,
-    setIsOpenBag,
-  } = useContext(BookContext);
+const DrawerFavorite = ({
+  isOpen,
+  onClose,
+  isOpenBag,
+  onCloseBag,
+  onOpenBag,
+  favorite,
+}) => {
+  const { catalog, removeFavorite, transBook } = useContext(BookContext);
+
+  const toBag = () => {
+    onOpenBag();
+    onClose();
+  };
 
   return (
     <Flex>
-      <Drawer
-        isOpen={isOpenFavorite}
-        placement="right"
-        size={"md"}
-        onClose={onCloseFavorite}
-      >
+      <Drawer isOpen={isOpen} placement="right" size={"md"} onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent borderLeftRadius="30px">
           <DrawerCloseButton />
@@ -156,14 +150,14 @@ const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
                   colorScheme="red"
                   my={2}
                   borderRadius={"50px"}
-                  onClick={() => setIsOpenBag(true)}
+                  onClick={toBag}
                 >
                   <Text>TO BAG</Text>
                 </Button>{" "}
                 <Button
                   variant="outline"
                   border={"none"}
-                  onClick={onCloseFavorite}
+                  onClick={onClose}
                   borderRadius={"50px"}
                   _hover={{ background: "#f7d0d0" }}
                 >
@@ -174,7 +168,7 @@ const DrawerFavorite = ({ isOpenFavorite, onCloseFavorite }) => {
           </DrawerFooter>
         </DrawerContent>
       </Drawer>{" "}
-      <DrawerBag isOpenBag={isOpenBag} onCloseBag={onCloseBag} />
+      <DrawerBag isOpen={isOpenBag} onClose={onCloseBag} />
     </Flex>
   );
 };

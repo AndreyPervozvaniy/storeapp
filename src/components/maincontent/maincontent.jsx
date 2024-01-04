@@ -46,7 +46,7 @@ const MainContent = () => {
               onChange={handleFilter}
             />{" "}
           </InputGroup>{" "}
-          {filterBook.length != 0 && (
+          {filterBook.length !== 0 && (
             <Flex
               background={"white"}
               overflow={"hidden"}
