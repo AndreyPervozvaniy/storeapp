@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import {
   Drawer,
   DrawerBody,
@@ -28,11 +28,27 @@ const DrawerFavorite = ({
   onOpenBag,
   favorite,
 }) => {
-  const { catalog, removeFavorite, transBook } = useContext(BookContext);
+  const { setCatalog } = useContext(BookContext);
 
   const toBag = () => {
     onOpenBag();
     onClose();
+  };
+
+  const removeFromFavorite = (id) => {
+    setCatalog((prev) =>
+      prev.map((book) =>
+        book.id === id ? { ...book, isFavorite: false } : book
+      )
+    );
+  };
+
+  const transBook = (id) => {
+    setCatalog((prev) =>
+      prev.map((book) =>
+        book.id === id ? { ...book, isFavorite: false, inBag: true } : book
+      )
+    );
   };
 
   return (
@@ -42,14 +58,13 @@ const DrawerFavorite = ({
         <DrawerContent borderLeftRadius="30px">
           <DrawerCloseButton />
           <DrawerHeader>
-            {" "}
             <Text fontWeight={"bold"} fontSize={"xl"}>
               FAVORITE ({favorite.length})
             </Text>
           </DrawerHeader>
 
           <DrawerBody>
-            {favorite.length === 0 ? (
+            {!favorite.length ? (
               <Image src={nofavorite} w={"500px"} />
             ) : (
               favorite.map((item, index) => (
@@ -75,63 +90,49 @@ const DrawerFavorite = ({
                       w={"70px"}
                     />
                     <Flex flexDir={"column"} textAlign={"center"}>
-                      {" "}
                       <Text>{item.name}</Text>
                       <Text>Price: {item.price} UAH</Text>
                     </Flex>
 
                     <Flex flexDir={"column"} justifyContent={"center"} w="40px">
-                      {" "}
-                      <Button
-                        onClick={() => removeFavorite(index)}
+                      <Flex
+                        justifyContent="center"
+                        alignItems="center"
+                        onClick={() => removeFromFavorite(item.id)}
                         _hover={{ color: "#f5f2f2" }}
                         background={"none"}
                       >
                         <Icon
+                          border="1px solid #f5eded"
+                          borderRadius="100%"
+                          _hover={{ bgColor: "grey", border: "1px solid grey" }}
                           as={MdOutlineCancel}
                           w={7}
                           h={7}
                           color={"black"}
                           cursor={"pointer"}
                         />
-                      </Button>{" "}
-                      {item.status ? (
-                        <Button
-                          w={"20px"}
-                          borderRadius={"50%"}
-                          background={"grey"}
-                          my={2}
-                          _hover={{ background: "#c40202" }}
-                          boxShadow="1px 5px 20px grey"
-                        >
-                          {" "}
-                          <Icon
-                            as={MdOutlineDownloadDone}
-                            w={5}
-                            h={5}
-                            color={"white"}
-                            cursor={"default"}
-                          />
-                        </Button>
-                      ) : (
-                        <Button
-                          w={"20px"}
-                          borderRadius={"50%"}
-                          background={"#fc0303"}
-                          my={2}
-                          _hover={{ background: "#c40202" }}
-                          boxShadow="1px 5px 20px grey"
-                          onClick={() => transBook(index)}
-                        >
-                          <Icon
-                            as={TiShoppingBag}
-                            w={5}
-                            h={5}
-                            color={"white"}
-                            cursor={"pointer"}
-                          />
-                        </Button>
-                      )}
+                      </Flex>
+                      <Button
+                        w={"20px"}
+                        borderRadius={"50%"}
+                        background={"grey"}
+                        my={2}
+                        cursor="pointer"
+                        _hover={{ background: "#c40202" }}
+                        onClick={() => transBook(item.id)}
+                        boxShadow="1px 5px 20px grey"
+                      >
+                        <Icon
+                          as={
+                            item.status ? MdOutlineDownloadDone : TiShoppingBag
+                          }
+                          w={5}
+                          h={5}
+                          color={"white"}
+                          cursor="pointer"
+                        />
+                      </Button>
                     </Flex>
                   </Flex>
                 </Flex>

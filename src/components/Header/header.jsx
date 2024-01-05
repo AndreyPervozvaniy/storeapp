@@ -26,8 +26,16 @@ const Header = () => {
 
   const { sum, setSum, addInBag, bookCount, catalog } = useContext(BookContext);
 
-  const favorite = useMemo(() => {
-    return catalog.filter((book) => book.isFavorite);
+  const { inBag, favorite } = useMemo(() => {
+    const books = {
+      favorite: [],
+      inBag: [],
+    };
+
+    books.favorite = catalog.filter((book) => book.isFavorite) ?? [];
+    books.inBag = catalog.filter((book) => book.inBag) ?? [];
+
+    return books;
   }, [catalog]);
 
   return (
@@ -61,7 +69,7 @@ const Header = () => {
               onClick={onOpen}
             />{" "}
             <Text color={"red"} ml={9} pos="absolute">
-              {bookCount >= 1 && bookCount}
+              {inBag.length >= 1 && inBag.length}
             </Text>
           </Flex>
           <Text as="span" fontWeight={"bold"}>
@@ -99,7 +107,7 @@ const Header = () => {
         onClose={onCloseFavorite}
         favorite={favorite}
       />
-      <DrawerBag isOpen={isOpen} onClose={onClose} />
+      <DrawerBag inBag={inBag} isOpen={isOpen} onClose={onClose} />
     </Flex>
   );
 };

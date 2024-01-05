@@ -9,9 +9,10 @@ import {
   Image,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import Card from "../Card/Card";
 import { CiSearch } from "react-icons/ci";
 import { CardContent } from "../../utils/utils";
+import SingleBook from "../SingleBook/SingleBook";
+
 const MainContent = () => {
   const [filterBook, setFilterBook] = useState([]);
   const handleFilter = (event) => {
@@ -28,6 +29,7 @@ const MainContent = () => {
       setFilterBook(newFilter);
     }
   };
+
   return (
     <Flex flexDir={"column"}>
       <Flex justifyContent={"space-between"} alignContent={"center"}>
@@ -82,7 +84,7 @@ const MainContent = () => {
 
       <Flex>
         <Flex>
-          <Card />
+          <SingleBook />
         </Flex>
       </Flex>
     </Flex>
