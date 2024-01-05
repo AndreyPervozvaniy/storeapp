@@ -15,6 +15,7 @@ import { useContext } from "react";
 import DrawerFavorite from "../Drawer/DrawerFavorite";
 import { BookContext } from "../../App";
 import DrawerBag from "../Drawer/DrawerBag";
+import { useGetSum } from "../../hooks";
 const Header = () => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
@@ -24,7 +25,7 @@ const Header = () => {
     onClose: onCloseFavorite,
   } = useDisclosure();
 
-  const { sum, setSum, addInBag, bookCount, catalog } = useContext(BookContext);
+  const { catalog } = useContext(BookContext);
 
   const { inBag, favorite } = useMemo(() => {
     const books = {
@@ -37,6 +38,8 @@ const Header = () => {
 
     return books;
   }, [catalog]);
+
+  const sum = useGetSum(inBag);
 
   return (
     <Flex>
@@ -73,7 +76,7 @@ const Header = () => {
             </Text>
           </Flex>
           <Text as="span" fontWeight={"bold"}>
-            {sum >= 1 && sum + "UAH"}
+            {sum && sum}UAH
           </Text>{" "}
           <Flex p={2}>
             <Icon

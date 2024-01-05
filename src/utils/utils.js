@@ -8,7 +8,6 @@ import book6 from "../assets/img/book6.jpg";
 import book8 from "../assets/img/book8.jpg";
 export const CardContent = [
   {
-    transferButton: false,
     image: book8,
     name: "The Witcher",
     price: "210 ",
@@ -20,7 +19,6 @@ export const CardContent = [
     titul: "hit",
   },
   {
-    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "430 ",
@@ -32,7 +30,6 @@ export const CardContent = [
     titul: "hit",
   },
   {
-    transferButton: false,
     image: book2,
     name: "Shantaram",
     price: "312 ",
@@ -43,7 +40,6 @@ export const CardContent = [
     titul: "hit",
   },
   {
-    transferButton: false,
     image: book3,
     name: "451 fahrenheit",
     price: "154 ",
@@ -54,7 +50,6 @@ export const CardContent = [
     fishka: "new",
   },
   {
-    transferButton: false,
     image: book4,
     name: "The Art of War",
     price: "130 ",
@@ -65,7 +60,6 @@ export const CardContent = [
     fishka: "new",
   },
   {
-    transferButton: false,
     image: book5,
     name: "Mystery Island",
     price: "210 ",
@@ -76,7 +70,6 @@ export const CardContent = [
     titul: "hit",
   },
   {
-    transferButton: false,
     image: book6,
     name: "Three Comrades",
     price: "340 ",
@@ -88,7 +81,6 @@ export const CardContent = [
     titul: "hit",
   },
   {
-    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "215 ",
@@ -99,7 +91,6 @@ export const CardContent = [
     fishka: "new",
   },
   {
-    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",
@@ -110,7 +101,6 @@ export const CardContent = [
     fishka: "new",
   },
   {
-    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",
@@ -121,7 +111,6 @@ export const CardContent = [
     fishka: "new",
   },
   {
-    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",
@@ -131,7 +120,6 @@ export const CardContent = [
     isFavorite: false,
   },
   {
-    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",
@@ -141,7 +129,6 @@ export const CardContent = [
     isFavorite: false,
   },
   {
-    transferButton: false,
     image: book1,
     name: "The Lord of the Rings",
     price: "1200 ",

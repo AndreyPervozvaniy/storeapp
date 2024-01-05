@@ -100,7 +100,7 @@ const SingleBook = () => {
                 src={singleBook.image}
                 h={"250px"}
                 w={"200px"}
-              ></Image>{" "}
+              />
               <Text m="1" textAlign={"center "} fontWeight={"bold"}>
                 {" "}
                 {singleBook.name}
@@ -129,7 +129,7 @@ const SingleBook = () => {
                     border={"none"}
                     onClick={() => addToBag(singleBook.id)}
                     background={"red"}
-                    _hover={{ background: "red" }}
+                    _hover={{ background: "tomato" }}
                     borderRadius={"30px"}
                   >
                     <Text color={"white"}>Add</Text>

@@ -29,6 +29,7 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
+import { useGetSum } from "../../hooks";
 
 const CALCULATION = {
   ADD: "+",
@@ -41,9 +42,7 @@ const rangePriceNova = 800;
 const DrawerBag = ({ isOpen, onClose, inBag }) => {
   const { setCatalog } = useContext(BookContext);
 
-  const sum = useMemo(() => {
-    return inBag?.reduce((sum, book) => sum + book.count * book.price, 0);
-  }, [inBag]);
+  const sum = useGetSum(inBag);
 
   const [rangeValues, setRangeValues] = useState([sum, 800]);
 
@@ -165,7 +164,7 @@ const DrawerBag = ({ isOpen, onClose, inBag }) => {
                             background={"white"}
                             borderLeftRadius={"20px"}
                             onClick={() => {
-                              if (item.count > 0) {
+                              if (item.count > 1) {
                                 onChangeCount(item.id, CALCULATION.MINUS);
                               }
                             }}
@@ -247,7 +246,7 @@ const DrawerBag = ({ isOpen, onClose, inBag }) => {
                     {sum > 800 ? "Free" : rangePriceNova - sum + " UAH"}
                   </Text>
                 </Flex>
-                {sum < rangePriceNova ? (
+                {sum < rangePriceNova && (
                   <RangeSlider
                     value={rangeValues}
                     min={0}
@@ -267,8 +266,6 @@ const DrawerBag = ({ isOpen, onClose, inBag }) => {
                       <Box color="black" as={GiPostOffice} />
                     </RangeSliderThumb>
                   </RangeSlider>
-                ) : (
-                  <></>
                 )}
               </Flex>
             </DrawerFooter>
