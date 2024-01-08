@@ -1,33 +1,46 @@
-import React from "react";
-import { Flex, Icon, Image, Text, Input } from "@chakra-ui/react";
+import React, { useMemo } from "react";
+import {
+  Flex,
+  Icon,
+  Image,
+  Text,
+  Input,
+  useDisclosure,
+} from "@chakra-ui/react";
 import Logo from "../../assets/img/Logo.png";
 import { FaShoppingBag } from "react-icons/fa";
 import { RxAvatar } from "react-icons/rx";
 import { MdFavoriteBorder } from "react-icons/md";
 import { useContext } from "react";
-import { useState } from "react";
 import DrawerFavorite from "../Drawer/DrawerFavorite";
 import { BookContext } from "../../App";
 import DrawerBag from "../Drawer/DrawerBag";
+import { useGetSum } from "../../hooks";
 const Header = () => {
-  const [isOpenFavorite, setIsOpenFavorite] = useState(false);
-  const [isOpenBag, setIsOpenBag] = useState(false);
-  const { suma, setSum, favorite, addInBag, bookCount } =
-    useContext(BookContext);
-  const onCloseFavorite = () => {
-    setIsOpenFavorite(false);
-  };
+  const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const onOpenFavorite = () => {
-    setIsOpenFavorite(true);
-  };
-  const onCloseBag = () => {
-    setIsOpenBag(false);
-  };
+  const {
+    isOpen: isOpenFavorite,
+    onOpen: onOpenFavorite,
+    onClose: onCloseFavorite,
+  } = useDisclosure();
 
-  const onOpenBag = () => {
-    setIsOpenBag(true);
-  };
+  const { catalog } = useContext(BookContext);
+
+  const { inBag, favorite } = useMemo(() => {
+    const books = {
+      favorite: [],
+      inBag: [],
+    };
+
+    books.favorite = catalog.filter((book) => book.isFavorite) ?? [];
+    books.inBag = catalog.filter((book) => book.inBag) ?? [];
+
+    return books;
+  }, [catalog]);
+
+  const sum = useGetSum(inBag);
+
   return (
     <Flex>
       <Flex
@@ -56,14 +69,14 @@ const Header = () => {
               _hover={{ color: "red" }}
               m={2}
               cursor={"pointer"}
-              onClick={onOpenBag}
+              onClick={onOpen}
             />{" "}
             <Text color={"red"} ml={9} pos="absolute">
-              {bookCount >= 1 && bookCount}
+              {inBag.length >= 1 && inBag.length}
             </Text>
           </Flex>
           <Text as="span" fontWeight={"bold"}>
-            {suma >= 1 && suma + "UAH"}
+            {sum && sum}UAH
           </Text>{" "}
           <Flex p={2}>
             <Icon
@@ -90,10 +103,14 @@ const Header = () => {
         </Flex>
       </Flex>{" "}
       <DrawerFavorite
-        isOpenFavorite={isOpenFavorite}
-        onCloseFavorite={onCloseFavorite}
+        isOpenBag={isOpen}
+        onOpenBag={onOpen}
+        onCloseBag={onClose}
+        isOpen={isOpenFavorite}
+        onClose={onCloseFavorite}
+        favorite={favorite}
       />
-      <DrawerBag isOpenBag={isOpenBag} onCloseBag={onCloseBag} />
+      <DrawerBag inBag={inBag} isOpen={isOpen} onClose={onClose} />
     </Flex>
   );
 };
