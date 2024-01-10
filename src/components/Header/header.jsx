@@ -72,11 +72,12 @@ const Header = () => {
               onClick={onOpen}
             />{" "}
             <Text color={"red"} ml={9} pos="absolute">
-              {inBag.length >= 1 && inBag.length}
+              {inBag.length >= 1 &&
+                inBag?.reduce((sum, book) => sum + book.count, 0)}
             </Text>
           </Flex>
           <Text as="span" fontWeight={"bold"}>
-            {sum && sum}UAH
+            {sum && sum} UAH
           </Text>{" "}
           <Flex p={2}>
             <Icon

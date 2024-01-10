@@ -101,8 +101,13 @@ const SingleBook = () => {
                 h={"250px"}
                 w={"200px"}
               />
-              <Text m="1" textAlign={"center "} fontWeight={"bold"}>
-                {" "}
+              <Text
+                m="1"
+                textAlign={"center "}
+                fontWeight={"bold"}
+                overflow="hidden"
+                textOverflow="ellipsis"
+              >
                 {singleBook.name}
               </Text>
               <Flex
