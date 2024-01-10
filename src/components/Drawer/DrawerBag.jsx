@@ -52,7 +52,9 @@ const DrawerBag = ({ isOpen, onClose, inBag }) => {
 
   const removeFromBag = (id) => {
     setCatalog((prev) =>
-      prev.map((book) => (book.id === id ? { ...book, inBag: false } : book))
+      prev.map((book) =>
+        book.id === id ? { ...book, inBag: false, count: 1 } : book
+      )
     );
   };
 
@@ -78,7 +80,7 @@ const DrawerBag = ({ isOpen, onClose, inBag }) => {
           <DrawerCloseButton />
           <DrawerHeader>
             <Text fontWeight={"bold"} fontSize={"xl"}>
-              Shop Bag {inBag?.length}
+              Shop Bag {inBag?.reduce((sum, book) => sum + book.count, 0)}
             </Text>
           </DrawerHeader>
 

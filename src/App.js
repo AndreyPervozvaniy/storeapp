@@ -1,8 +1,8 @@
 import React, { createContext, useState } from "react";
 import { Flex } from "@chakra-ui/react";
 import Header from "./components/Header/Header";
-import MainContent from "./components/maincontent/Maincontent";
-import Slider from "./components/slider/Slider";
+import MainContent from "./components/Maincontent/Maincontent";
+import Slider from "./components/Slider/Slider";
 import { CardContent } from "./utils/utils";
 export const BookContext = createContext();
 
