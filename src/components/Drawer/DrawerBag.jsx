@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import {
   Drawer,
@@ -17,11 +17,9 @@ import {
 } from "@chakra-ui/react";
 import { useContext } from "react";
 import { BookContext } from "../../App";
-import { TiShoppingBag } from "react-icons/ti";
 import { MdOutlineCancel } from "react-icons/md";
 import emptybag from "../../assets/img/emptybag.jpg";
 import novaposhta from "../../assets/img/nova.jpg";
-import { GiBus } from "react-icons/gi";
 import ukrposhta from "../../assets/img/ukrposhta.png";
 import { GiPostOffice } from "react-icons/gi";
 import { LuBus } from "react-icons/lu";
@@ -31,52 +29,67 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
-const DrawerBag = ({ isOpenBag, onCloseBag }) => {
-  const {
-    addInBag,
-    removeFavorite,
-    removeBag,
-    bookCount,
-    suma,
-    setBookCount,
-    bookCountMinus,
+import { useGetSum } from "../../hooks";
 
-    bookCountPlus,
-  } = useContext(BookContext);
-  const [rangePriceUkr, setRangePriceUkr] = useState(400);
-  const [rangePriceNova, setRangePriceNova] = useState(800);
-  const [rangeValues, setRangeValues] = useState([suma, 800]);
+const CALCULATION = {
+  ADD: "+",
+  MINUS: "-",
+};
+
+const rangePriceUkr = 400;
+const rangePriceNova = 800;
+
+const DrawerBag = ({ isOpen, onClose, inBag }) => {
+  const { setCatalog } = useContext(BookContext);
+
+  const sum = useGetSum(inBag);
+
+  const [rangeValues, setRangeValues] = useState([sum, 800]);
 
   useEffect(() => {
-    setRangeValues([suma, 800]);
-  }, [suma]);
+    setRangeValues([sum, 800]);
+  }, [sum]);
+
+  const removeFromBag = (id) => {
+    setCatalog((prev) =>
+      prev.map((book) => (book.id === id ? { ...book, inBag: false } : book))
+    );
+  };
+
+  const onChangeCount = (id, condition) => {
+    setCatalog((prev) =>
+      prev.map((book) =>
+        book.id === id
+          ? {
+              ...book,
+              count:
+                condition === CALCULATION.ADD ? book.count + 1 : book.count - 1,
+            }
+          : book
+      )
+    );
+  };
 
   return (
     <Flex>
-      <Drawer
-        isOpen={isOpenBag}
-        placement="right"
-        size={"md"}
-        onClose={onCloseBag}
-      >
+      <Drawer isOpen={isOpen} placement="right" size={"md"} onClose={onClose}>
         <DrawerOverlay />
         <DrawerContent borderLeftRadius="30px">
           <DrawerCloseButton />
           <DrawerHeader>
-            {" "}
             <Text fontWeight={"bold"} fontSize={"xl"}>
-              Shop Bag ({bookCount})
+              Shop Bag {inBag?.length}
             </Text>
           </DrawerHeader>
 
           <DrawerBody>
-            {addInBag.length === 0 ? (
+            {!inBag?.length ? (
               <Flex flexDirection={"column"}>
-                <Image src={emptybag} />{" "}
+                <Image src={emptybag} />
                 <Button
                   variant="outline"
                   border={"none"}
-                  onClick={onCloseBag}
+                  onClick={onClose}
                   borderRadius={"50px"}
                   _hover={{ background: "#f7d0d0" }}
                 >
@@ -84,12 +97,12 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                 </Button>
               </Flex>
             ) : (
-              addInBag.map((item, index) => (
+              inBag?.map((item, index) => (
                 <Flex
                   key={index}
                   flexDir={"column"}
                   borderBottom={
-                    index < addInBag.length - 1 ? "1px solid #ccc" : ""
+                    index < inBag.length - 1 ? "1px solid #ccc" : ""
                   }
                 >
                   <Flex
@@ -116,19 +129,28 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                         w="110px"
                       >
                         {" "}
-                        <Button
-                          onClick={() => removeBag(index)}
+                        <Flex
+                          mb="5px"
+                          justifyContent="center"
+                          alignItems="center"
+                          onClick={() => removeFromBag(item.id)}
                           _hover={{ color: "#f5f2f2" }}
                           background={"none"}
                         >
                           <Icon
+                            border="1px solid white"
+                            borderRadius="100%"
+                            _hover={{
+                              bgColor: "grey",
+                              border: "1px solid grey",
+                            }}
                             as={MdOutlineCancel}
                             w={7}
                             h={7}
                             color={"black"}
                             cursor={"pointer"}
                           />
-                        </Button>{" "}
+                        </Flex>{" "}
                         <Flex
                           flexDir={"row"}
                           justifyContent={"center"}
@@ -142,38 +164,26 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                             background={"white"}
                             borderLeftRadius={"20px"}
                             onClick={() => {
-                              if (item.count > 0) {
-                                bookCountMinus(index);
+                              if (item.count > 1) {
+                                onChangeCount(item.id, CALCULATION.MINUS);
                               }
                             }}
                           >
                             <Text color={"#grey"}>-</Text>
                           </Button>
                           <Text mx={2}>{item.count}</Text>{" "}
-                          {item.count < 9 ? (
-                            <Button
-                              background={"white"}
-                              borderRightRadius={"20px"}
-                              onClick={() => {
-                                if (item.count < 9) {
-                                  bookCountPlus(index);
-                                }
-                              }}
-                            >
-                              {" "}
-                              <Text>+</Text>
-                            </Button>
-                          ) : (
-                            <Button
-                              cursor={"default"}
-                              background={"white"}
-                              borderRightRadius={"20px"}
-                              _hover={{ background: "white" }}
-                            >
-                              {" "}
-                              <Text color={"#ccc"}>+</Text>
-                            </Button>
-                          )}
+                          <Button
+                            background={"white"}
+                            isDisabled={item.count === 9}
+                            borderRightRadius={"20px"}
+                            onClick={() => {
+                              if (item.count < 9) {
+                                onChangeCount(item.id, CALCULATION.ADD);
+                              }
+                            }}
+                          >
+                            <Text>+</Text>
+                          </Button>
                         </Flex>
                       </Flex>
                     </Flex>
@@ -182,9 +192,7 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
               ))
             )}
           </DrawerBody>
-          {addInBag.length < 1 ? (
-            <></>
-          ) : (
+          {inBag?.length && (
             <DrawerFooter background={"#ccc"}>
               <Flex flexDir={"column"} w={"full"}>
                 <Text fontWeight={"bold"} fontSize={"lg"}>
@@ -201,15 +209,10 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                     />
                     <Text>On post:</Text>
                   </Flex>
-                  {suma > 400 ? (
-                    <Text fontWeight={"bold"} fontSize={"lg"}>
-                      Free
-                    </Text>
-                  ) : (
-                    <Text fontWeight={"bold"} fontSize={"lg"}>
-                      {rangePriceUkr - suma} UAH
-                    </Text>
-                  )}
+
+                  <Text fontWeight={"bold"} fontSize={"lg"}>
+                    {sum > 400 ? "Free" : rangePriceUkr - sum + " UAH"}
+                  </Text>
                 </Flex>{" "}
                 <Flex justifyContent={"space-between"} w={"full"}>
                   <Flex alignItems={"center"}>
@@ -222,15 +225,10 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                     />
                     <Text>On post:</Text>
                   </Flex>
-                  {suma > 800 ? (
-                    <Text fontWeight={"bold"} fontSize={"lg"}>
-                      Free
-                    </Text>
-                  ) : (
-                    <Text fontWeight={"bold"} fontSize={"lg"}>
-                      {rangePriceNova - suma} UAH
-                    </Text>
-                  )}
+
+                  <Text fontWeight={"bold"} fontSize={"lg"}>
+                    {sum > 800 ? "Free" : rangePriceNova - sum + " UAH"}
+                  </Text>
                 </Flex>{" "}
                 <Flex justifyContent={"space-between"} w={"full"}>
                   <Flex alignItems={"center"}>
@@ -243,17 +241,12 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                     />
                     <Text>On post cell:</Text>
                   </Flex>
-                  {suma > 800 ? (
-                    <Text fontWeight={"bold"} fontSize={"lg"}>
-                      Free
-                    </Text>
-                  ) : (
-                    <Text fontWeight={"bold"} fontSize={"lg"}>
-                      {rangePriceNova - suma} UAH
-                    </Text>
-                  )}
+
+                  <Text fontWeight={"bold"} fontSize={"lg"}>
+                    {sum > 800 ? "Free" : rangePriceNova - sum + " UAH"}
+                  </Text>
                 </Flex>
-                {suma < rangePriceNova ? (
+                {sum < rangePriceNova && (
                   <RangeSlider
                     value={rangeValues}
                     min={0}
@@ -273,8 +266,6 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                       <Box color="black" as={GiPostOffice} />
                     </RangeSliderThumb>
                   </RangeSlider>
-                ) : (
-                  <></>
                 )}
               </Flex>
             </DrawerFooter>
@@ -288,7 +279,7 @@ const DrawerBag = ({ isOpenBag, onCloseBag }) => {
                 <Text color={"grey"}>To pay without deliver : </Text>
                 <Text fontWeight={"bold"} fontSize={"2xl"}>
                   {" "}
-                  {suma} UAH
+                  {sum} UAH
                 </Text>
               </Flex>
               <Flex
