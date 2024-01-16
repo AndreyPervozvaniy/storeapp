@@ -79,9 +79,14 @@ const DrawerBag = ({ isOpen, onClose, inBag }) => {
         <DrawerContent borderLeftRadius="30px">
           <DrawerCloseButton />
           <DrawerHeader>
-            <Text fontWeight={"bold"} fontSize={"xl"}>
-              Shop Bag {inBag?.reduce((sum, book) => sum + book.count, 0)}
-            </Text>
+            <Flex>
+              <Text fontWeight={"bold"} fontSize={"xl"} mx={2}>
+                Shop Bag
+              </Text>
+              <Text color={"#ccc"}>
+                ({inBag?.reduce((sum, book) => sum + book.count, 0)})
+              </Text>
+            </Flex>
           </DrawerHeader>
 
           <DrawerBody>
@@ -104,7 +109,7 @@ const DrawerBag = ({ isOpen, onClose, inBag }) => {
                   key={index}
                   flexDir={"column"}
                   borderBottom={
-                    index < inBag.length - 1 ? "1px solid #ccc" : ""
+                    index < !inBag.length - 1 ? "1px solid #ccc" : ""
                   }
                 >
                   <Flex
@@ -194,7 +199,7 @@ const DrawerBag = ({ isOpen, onClose, inBag }) => {
               ))
             )}
           </DrawerBody>
-          {inBag?.length && (
+          {inBag?.length >= 1 && (
             <DrawerFooter background={"#ccc"}>
               <Flex flexDir={"column"} w={"full"}>
                 <Text fontWeight={"bold"} fontSize={"lg"}>
@@ -275,12 +280,9 @@ const DrawerBag = ({ isOpen, onClose, inBag }) => {
 
           <DrawerFooter>
             <Flex flexDir={"column"} w={"full"}>
-              {" "}
               <Flex justifyContent={"space-between"} alignItems={"center"}>
-                {" "}
                 <Text color={"grey"}>To pay without deliver : </Text>
                 <Text fontWeight={"bold"} fontSize={"2xl"}>
-                  {" "}
                   {sum} UAH
                 </Text>
               </Flex>

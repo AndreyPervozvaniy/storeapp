@@ -58,9 +58,12 @@ const DrawerFavorite = ({
         <DrawerContent borderLeftRadius="30px">
           <DrawerCloseButton />
           <DrawerHeader>
-            <Text fontWeight={"bold"} fontSize={"xl"}>
-              FAVORITE ({favorite.length})
-            </Text>
+            <Flex>
+              <Text fontWeight={"bold"} fontSize={"xl"} mx={2}>
+                Favourite
+              </Text>
+              <Text color={"#ccc"}> ({favorite.length}) </Text>
+            </Flex>
           </DrawerHeader>
 
           <DrawerBody>
